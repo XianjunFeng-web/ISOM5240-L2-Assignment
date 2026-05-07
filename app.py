@@ -9,9 +9,9 @@ st.title("🌟 Storytelling Application 🌟")
 st.write("🤓Welcome to storytelling app!🖼️")
 st.write("☀️Sweetie，It is the wonderful story time~ ~Let's enjoy the story! ✨❤️")
 
-
+#
 # File uploader for image and audio
-uploaded_image = st.file_uploader("Upload an image",
+uploaded_image = st.file_uploader("Identify today's fun by selecting a picture and then start our story journey",
                                   type=["jpg", "jpeg", "png"])
 
 
