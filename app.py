@@ -12,11 +12,15 @@ st.write("🤓Welcome to storytelling app!🖼️")
 st.write("☀️Sweetie，It is the wonderful story time~ ~Let's enjoy the story! ✨❤️")
 
 # Function part
-def img2text(file):
-    image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
-    image = Image.open(file)
-    text = image_to_text_model(image)[0]["generated_text"]
-    return text
+def text2story(text):
+    # This creates a text-generation pipeline
+    story_model = pipeline("text-generation", model="distilgpt2")
+    
+    # We ask the model to take your caption and write a short story
+    prompt = f"Write a short, creative story based on this scene: {text}. The story begins: "
+    story = story_model(prompt, max_length=150, do_sample=True, temperature=0.7)
+    
+    return story[0]['generated_text']
     
 # Main part
    
@@ -43,9 +47,18 @@ if st.button("Click Me"):# Button interaction
        
 #  Convert image into Text (Using the function)
     st.text('Turn Your Image to story in text...')
-    scenario = img2text(uploaded_image)
-    st.write(f"**Scenario:** {scenario}")
 
+if uploaded_image is not None:
+    # Step 1: Get the caption (The simple sentence)
+    scenario = img2text(uploaded_image)
+    st.write(f"**Caption:** {scenario}")
+    
+    # Step 2: Turn the caption into a story (The paragraphs)
+    if st.button("Generate Story"):
+        with st.spinner("Writing your story..."):
+            story = text2story(scenario)
+            st.write("**Full Story:**")
+            st.write(story)
 
 # Step 3: Click to convert text story for audio
 
