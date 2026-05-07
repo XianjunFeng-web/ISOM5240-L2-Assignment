@@ -4,18 +4,19 @@ import time
 
 # App title
 st.title("🌟 Storytelling Application 🌟")
+st.set_page_config(page_title="Story telling application", page_icon="🦜")
 
 # Write some text
 st.write("🤓Welcome to storytelling app!🖼️")
 st.write("☀️Sweetie，It is the wonderful story time~ ~Let's enjoy the story! ✨❤️")
 
 # Function part
-def img2text(uploaded_image):
+def img2text(url):
     image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
     text = image_to_text_model(uploaded_image)[0]["generated_text"]
     return text
     
-
+def main() 
 # File uploader for image and audio
 uploaded_image = st.file_uploader("Identify today's fun by selecting a picture and then start our story journey",
                                   type=["jpg", "jpeg", "png"])
@@ -24,6 +25,19 @@ uploaded_image = st.file_uploader("Identify today's fun by selecting a picture a
     st.text('Processing img2text...')
     scenario = img2text(uploaded_file.name)
     st.write(f"**Scenario:** {scenario}")
+
+  # Main part
+
+st.header("Turn Your Image to Audio Story")
+uploaded_file = st.file_uploader("Select an Image...")
+
+if uploaded_file is not None:
+    # Save file locally
+    bytes_data = uploaded_file.getvalue()
+    with open(uploaded_file.name, "wb") as file:
+        file.write(bytes_data)
+
+    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
 
 
 
