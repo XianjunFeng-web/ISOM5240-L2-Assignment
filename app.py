@@ -33,8 +33,11 @@ st.header("🤩Click to turn your Image into Audio Story")
 
 # Button interaction
 if st.button("Click Me"):
-    st.write("🎉 Turned into below Audio Story!")
+    st.write("🎉 Turn the image into Audio Story below!")
    
+else:
+    # Optional: Tell the user to upload a file
+    st.info("Please upload an image to start the story.")   
     
 #  Stage 1: Image to Text (Using the function)
     st.text('Turn Your Image to story in text...')
