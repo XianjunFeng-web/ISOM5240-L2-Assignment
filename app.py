@@ -33,18 +33,21 @@ if uploaded_image is not None:
 else:
     # Optional: Tell the user to upload a file
     st.info("Please upload an image to start the story.")   
-    
-st.header("🤩Click to turn your Image into Audio Story")
- 
-if st.button("Click Me"):# Button interaction
-    st.write("🎉 Turn the image into Audio Story below!")
-   
 
-    
-#  Step2: Convert image to Text (Using the function)
+#  Step2: Convert image to Text (Using the function)    
+st.header("🤩Click to turn your Image into Story in Text")
+
+#  Make a button to generate Text (Using the function) 
+if st.button("Click Me"):# Button interaction
+    st.write("🎉 Turn the image into Story !")
+       
+#  Convert image into Text (Using the function)
     st.text('Turn Your Image to story in text...')
     scenario = img2text(uploaded_image)
     st.write(f"**Scenario:** {scenario}")
+
+
+# Step 3: Click to convert text story for audio
 
 
 
