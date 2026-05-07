@@ -17,8 +17,7 @@ def img2text(url):
     return text
     
 # Main part
-    st.header("Turn Your Image to Audio Story")
-
+   
 # File uploader for image and audio
 uploaded_image = st.file_uploader("Pick up an image and then start our story journey", type=["jpg", "jpeg", "png"])
 
@@ -28,6 +27,11 @@ if uploaded_image is not None:
         image = Image.open(uploaded_image)
         st.image(image, caption="Uploaded Image", use_column_width=True)
 
+st.header("Click me for turning your Image into Audio Story")
+
+# Button interaction
+if st.button("Click Me"):
+    st.write("🎉 Turned into below Audio Story!")
    
     
 #  Stage 1: Image to Text (Using the function)
@@ -38,6 +42,3 @@ if uploaded_image is not None:
 
 
 
-# Button interaction
-if st.button("Click Me"):
-    st.write("🎉 You clicked the button!")
