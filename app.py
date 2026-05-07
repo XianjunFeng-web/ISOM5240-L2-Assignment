@@ -16,31 +16,24 @@ def img2text(url):
     text = image_to_text_model(uploaded_image)[0]["generated_text"]
     return text
     
+# Main part
+st.header("Turn Your Image to Audio Story")
 
 # File uploader for image and audio
   uploaded_image = st.file_uploader("Identify today's fun by selecting a picture and then start our story journey",
                                   type=["jpg", "jpeg", "png"])
 
-#  Stage 1: Image to Text (Using the function)
-    st.text('Turn Your Image to story in text...')
-    scenario = img2text(uploaded_image.name)
-    st.write(f"**Scenario:** {scenario}")
-
-  # Main part
-
-st.header("Turn Your Image to Audio Story")
-uploaded_file = st.file_uploader("Select an Image...")
-
-if uploaded_file is not None:
-    # Save file locally
+  if uploaded_file is not None:
+       # Save file locally
     bytes_data = uploaded_file.getvalue()
     with open(uploaded_file.name, "wb") as file:
         file.write(bytes_data)
 
     st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
-
-
-
+#  Stage 1: Image to Text (Using the function)
+    st.text('Turn Your Image to story in text...')
+    scenario = img2text(uploaded_image.name)
+    st.write(f"**Scenario:** {scenario}")
 
 
 # Display image with spinner
