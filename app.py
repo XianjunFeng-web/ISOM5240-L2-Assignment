@@ -6,8 +6,8 @@ import time
 st.title("🌟 Storytelling Application 🌟")
 
 # Write some text
-st.write("Welcome to storytelling app!")
-st.write("Sweetie，It is the wonderful story time~ ~Let's enjoy the story! ✨❤️")
+st.write("🤓Welcome to storytelling app!🖼️")
+st.write("☀️Sweetie，It is the wonderful story time~ ~Let's enjoy the story! ✨❤️")
 
 
 # File uploader for image and audio
