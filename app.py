@@ -20,7 +20,7 @@ def img2text(uploaded_image):
 uploaded_image = st.file_uploader("Identify today's fun by selecting a picture and then start our story journey",
                                   type=["jpg", "jpeg", "png"])
 
-# # Stage 1: Image to Text (Using the function)
+#  Stage 1: Image to Text (Using the function)
     st.text('Processing img2text...')
     scenario = img2text(uploaded_file.name)
     st.write(f"**Scenario:** {scenario}")
