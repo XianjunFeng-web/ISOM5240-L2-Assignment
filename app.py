@@ -27,7 +27,7 @@ if uploaded_image is not None:
         image = Image.open(uploaded_image)
         st.image(image, caption="Uploaded Image", use_column_width=True)
 
-st.header("Click me for turning your Image into Audio Story")
+st.header("Click to turn your Image into Audio Story")
 
 # Button interaction
 if st.button("Click Me"):
