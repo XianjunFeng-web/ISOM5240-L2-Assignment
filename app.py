@@ -12,9 +12,10 @@ st.write("🤓Welcome to storytelling app!🖼️")
 st.write("☀️Sweetie，It is the wonderful story time~ ~Let's enjoy the story! ✨❤️")
 
 # Function part
-def img2text(url):
+def img2text(file):
     image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
-    text = image_to_text_model(uploaded_image)[0]["generated_text"]
+    image = Image.open(file)
+    text = image_to_text_model(image)[0]["generated_text"]
     return text
     
 # Main part
