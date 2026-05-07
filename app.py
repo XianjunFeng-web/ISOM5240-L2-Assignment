@@ -28,7 +28,10 @@ if uploaded_image is not None:
         time.sleep(1)  # Simulate a delay
         image = Image.open(uploaded_image)
         st.image(image, caption="Uploaded Image", use_column_width=True)
-
+else:
+    # Optional: Tell the user to upload a file
+    st.info("Please upload an image to start the story.")   
+    
 st.header("🤩Click to turn your Image into Audio Story")
 
 # Button interaction
