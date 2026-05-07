@@ -3,7 +3,7 @@ from PIL import Image
 import time
 
 # App title
-st.title("Storytelling Application")
+st.title("⭐ Star Storytelling Application ⭐ Star")
 
 # Write some text
 st.write("Welcome to storytelling app!")
