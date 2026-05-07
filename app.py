@@ -19,7 +19,7 @@ def img2text(url):
 # Main part
    
 # File uploader for image and audio
-st.header("First, pick up an image and then start our story journey 🔐")
+st.header("🤩Pick up an image and then start our story journey🎉")
 
 uploaded_image = st.file_uploader("upload image...", type=["jpg", "jpeg", "png"])
 
@@ -29,7 +29,7 @@ if uploaded_image is not None:
         image = Image.open(uploaded_image)
         st.image(image, caption="Uploaded Image", use_column_width=True)
 
-st.header("Click to turn your Image into Audio Story")
+st.header("🤩Click to turn your Image into Audio Story")
 
 # Button interaction
 if st.button("Click Me"):
