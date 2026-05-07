@@ -20,9 +20,8 @@ def img2text(url):
     st.header("Turn Your Image to Audio Story")
 
 # File uploader for image and audio
-  uploaded_image = st.file_uploader("Upload an image",
-                                  type=["jpg", "jpeg", "png"])
-# Display image with spinner
+uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+
 if uploaded_image is not None:
     with st.spinner("Loading image..."):
         time.sleep(1)  # Simulate a delay
