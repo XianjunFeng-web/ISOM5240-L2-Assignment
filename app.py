@@ -17,7 +17,7 @@ def img2text(url):
     return text
     
 # Main part
-  st.header("Turn Your Image to Audio Story")
+    st.header("Turn Your Image to Audio Story")
 
 # File uploader for image and audio
   uploaded_image = st.file_uploader("Upload an image",
