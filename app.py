@@ -42,7 +42,7 @@ if st.button("Click Me"):# Button interaction
     
 #  Step2: Convert image to Text (Using the function)
     st.text('Turn Your Image to story in text...')
-    scenario = img2text(uploaded_image.name)
+    scenario = img2text(uploaded_image)
     st.write(f"**Scenario:** {scenario}")
 
 
