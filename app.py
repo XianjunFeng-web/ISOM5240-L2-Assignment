@@ -12,6 +12,15 @@ st.write("🤓Welcome to storytelling app!🖼️")
 st.write("☀️Sweetie，It is the wonderful story time~ ~Let's enjoy the story! ✨❤️")
 
 # Function part
+
+def img2text(file):
+    # If you changed the model name inside here, that's fine!
+    pipe = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+    image = Image.open(file)
+    result = pipe(image)
+    return result[0]['generated_text']
+
+
 def text2story(text):
     # This creates a text-generation pipeline
     story_model = pipeline("text-generation", model="distilgpt2")
