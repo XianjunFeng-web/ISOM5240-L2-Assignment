@@ -19,7 +19,7 @@ def img2text(url):
 # Main part
    
 # File uploader for image and audio
-st.Header(First, pick up an image and then start our story journey 🔐)
+st.Header("First, pick up an image and then start our story journey 🔐")
 uploaded_image = st.file_uploader("upload image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_image is not None:
