@@ -14,10 +14,19 @@ def img2text(uploaded_image):
     image_to_text_model = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
     text = image_to_text_model(uploaded_image)[0]["generated_text"]
     return text
+    
 
 # File uploader for image and audio
 uploaded_image = st.file_uploader("Identify today's fun by selecting a picture and then start our story journey",
                                   type=["jpg", "jpeg", "png"])
+
+# # Stage 1: Image to Text (Using the function)
+    st.text('Processing img2text...')
+    scenario = img2text(uploaded_file.name)
+    st.write(f"**Scenario:** {scenario}")
+
+
+
 
 
 # Display image with spinner
