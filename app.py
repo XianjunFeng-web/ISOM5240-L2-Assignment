@@ -17,10 +17,10 @@ def img2text(url):
     return text
     
 # Main part
-st.header("Turn Your Image to Audio Story")
+  st.header("Turn Your Image to Audio Story")
 
 # File uploader for image and audio
-  uploaded_image = st.file_uploader("Identify today's fun by selecting a picture and then start our story journey",
+  uploaded_image = st.file_uploader("Upload an image",
                                   type=["jpg", "jpeg", "png"])
 
   if uploaded_file is not None:
