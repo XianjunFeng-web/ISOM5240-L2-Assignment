@@ -22,26 +22,23 @@ def img2text(url):
 # File uploader for image and audio
   uploaded_image = st.file_uploader("Upload an image",
                                   type=["jpg", "jpeg", "png"])
-
-  if uploaded_file is not None:
-       # Save file locally
-    bytes_data = uploaded_file.getvalue()
-    with open(uploaded_file.name, "wb") as file:
-        file.write(bytes_data)
-
-    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
-#  Stage 1: Image to Text (Using the function)
-    st.text('Turn Your Image to story in text...')
-    scenario = img2text(uploaded_image.name)
-    st.write(f"**Scenario:** {scenario}")
-
-
 # Display image with spinner
 if uploaded_image is not None:
     with st.spinner("Loading image..."):
         time.sleep(1)  # Simulate a delay
         image = Image.open(uploaded_image)
         st.image(image, caption="Uploaded Image", use_column_width=True)
+
+    st.image(uploaded_image, caption="Uploaded Image", use_column_width=True)
+
+    
+#  Stage 1: Image to Text (Using the function)
+    st.text('Turn Your Image to story in text...')
+    scenario = img2text(uploaded_image.name)
+    st.write(f"**Scenario:** {scenario}")
+
+
+
 
 # Button interaction
 if st.button("Click Me"):
