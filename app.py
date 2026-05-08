@@ -1,79 +1,77 @@
-
 from transformers import pipeline
 import streamlit as st
 from PIL import Image
-import time
 import torch
 
+# 1. Page Configuration
 st.set_page_config(page_title="Story telling application", page_icon="🦜")
 
-# App title
-st.title("🌟 Storytelling Application 🌟")
-
-st.write("🤓 Welcome to storytelling app! 🖼️")
-st.write("☀️ Sweetie, it is wonderful story time~ Let's enjoy the story! ✨❤️")
-
 # --- Functions ---
+
 @st.cache_resource 
 def get_models():
-    # Loading all three AI models
+    """Function 1: Load all AI engines"""
     captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
     story_gen = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
-    # Using a robust Text-to-Speech model
     audio_pipe = pipeline("text-to-speech", model="facebook/mms-tts-eng")
     return captioner, story_gen, audio_pipe
 
+# Initialize models
 captioner, story_gen, audio_pipe = get_models()
 
 def img2text(file):
+    """Function 2: Image to Caption"""
     image = Image.open(file)
     result = captioner(image)
     return result[0]['generated_text']
 
 def text2story(text):
+    """Function 3: Caption to Story"""
     prompt = f"Write a short, creative story based on this scene: {text}. The story begins: "
     story_output = story_gen(prompt, max_length=150, do_sample=True, temperature=0.7)
     return story_output[0]['generated_text']
 
 def story2audio(story_text):
-    # This turns the story text into audio waves
+    """Function 4: Story to Speech"""
     audio_output = audio_pipe(story_text)
     return audio_output
 
-# --- Main Part ---
-st.header("🤩 Pick up an image to start")
+# --- Main UI ---
+st.title("🌟 Storytelling Application 🌟")
+st.write("🤓 Welcome! Let's enjoy the story! ✨❤️")
+
 uploaded_image = st.file_uploader("Upload image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_image is not None:
-    image = Image.open(uploaded_image)
-    st.image(image, caption="Uploaded Image", use_container_width=True)
+    st.image(Image.open(uploaded_image), caption="Uploaded Image", use_container_width=True)
     
-    # STEP 1: Generate Caption only when this button is clicked
-    if st.button("🔍 Step 1: Describe Image"):
-        with st.spinner("Analyzing..."):
-            scenario = img2text(uploaded_image)
-            st.session_state['scenario'] = scenario # Save it!
+    # --- STEP 1: DESCRIBE ---
+    st.header("Step 1: Describe Image")
+    if st.button("Describe Image"):
+        # We call the function and save the result to session_state
+        st.session_state['scenario'] = img2text(uploaded_image)
 
-    # Check if we have a scenario saved
     if 'scenario' in st.session_state:
-        st.write(f"**Description:** {st.session_state['scenario']}")
+        st.success(f"**Description:** {st.session_state['scenario']}")
 
-        # STEP 2: Generate Story only when THIS button is clicked
-        if st.button("✨ Step 2: Generate My Story ✨"):
-            with st.spinner("Writing a magical story..."):
-                generated_story = text2story(st.session_state['scenario'])
-                st.session_state['saved_story'] = generated_story # Save it!
+        # --- STEP 2: STORY ---
+        st.header("Step 2: Generate Story")
+        if st.button("Generate Story"):
+            # We call the function using the saved scenario
+            st.session_state['story'] = text2story(st.session_state['scenario'])
 
-    # STEP 3: Show Story and Audio button if story exists
-    if 'saved_story' in st.session_state:
+    if 'story' in st.session_state:
         st.write("---")
         st.subheader("📖 The Story")
-        st.write(st.session_state['saved_story'])
+        st.write(st.session_state['story'])
 
-        if st.button("🎧 Play Audio"):
-            with st.spinner("Converting story to speech..."):
-                audio_data = story2audio(st.session_state['saved_story'])
+        # --- STEP 3: AUDIO ---
+        st.header("Step 3: Play Audio")
+        if st.button("Play Audio"):
+            with st.spinner("Generating voice..."):
+                # We call the function using the saved story
+                audio_data = story2audio(st.session_state['story'])
                 st.audio(audio_data["audio"], sample_rate=audio_data["sampling_rate"])
 
 else:
-    st.info("Please upload an image to start the story.")
+    st.info("Please upload an image to begin.")
