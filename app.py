@@ -3,7 +3,6 @@ import streamlit as st
 from PIL import Image
 import time
 
-
 st.set_page_config(page_title="Story telling application", page_icon="🦜")
 
 # App title
@@ -28,7 +27,7 @@ def img2text(file):
     return result[0]['generated_text']
 
 def text2story(text):
-    prompt = f"Write a short, creative story based on this scene: {text}. The story begins: "
+    prompt = f"Write a short, creative story based on this scene: {text}. The story begins: 
     story = story_gen(prompt, max_length=150, do_sample=True, temperature=0.7)
     return story[0]['generated_text']
 
