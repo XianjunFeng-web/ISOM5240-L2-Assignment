@@ -31,6 +31,13 @@ def text2story(text):
     story = story_gen(prompt, max_length=150, do_sample=True, temperature=0.7)
     return story[0]['generated_text']
 
+def story2audio(audio):
+    audio_pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
+    audio_data = audio_pipe(story)
+    return story[0]['generated_audio']
+    
+    
+
 # --- Main Part  ---
 st.header("🤩 Pick up an image to start")
 uploaded_image = st.file_uploader("Upload image...", type=["jpg", "jpeg", "png"])
@@ -54,8 +61,11 @@ if uploaded_image is not None:
 else:
     st.info("Please upload an image to start the story.")
 
-
-
+    # Now show the button to generate the story in audio
+    if st.button("Play Audio"):
+        audio_array = audio_data["audio"]
+        sample_rate = audio_data["sampling_rate"]
+        st.audio(audio_array, sample_rate=sample_rate)
 
 
 
