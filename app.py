@@ -3,7 +3,7 @@ import streamlit as st
 from PIL import Image
 import time
 
-# 1. MUST BE FIRST
+
 st.set_page_config(page_title="Story telling application", page_icon="🦜")
 
 # App title
@@ -32,7 +32,7 @@ def text2story(text):
     story = story_gen(prompt, max_length=150, do_sample=True, temperature=0.7)
     return story[0]['generated_text']
 
-# --- Main Part (Moved to the left margin!) ---
+# --- Main Part  ---
 st.header("🤩 Pick up an image to start")
 uploaded_image = st.file_uploader("Upload image...", type=["jpg", "jpeg", "png"])
 
