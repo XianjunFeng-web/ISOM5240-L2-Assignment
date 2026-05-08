@@ -12,23 +12,23 @@ st.write("🤓Welcome to storytelling app!🖼️")
 st.write("☀️Sweetie，It is the wonderful story time~ ~Let's enjoy the story! ✨❤️")
 
 # Function part
-    # Function 1
-    def img2text(file):
-        # If you changed the model name inside here, that's fine!
-        pipe = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
-        image = Image.open(file)
-        result = pipe(image)
-        return result[0]['generated_text']
+# Function 1
+def img2text(file):
+    # If you changed the model name inside here, that's fine!
+    pipe = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+    image = Image.open(file)
+    result = pipe(image)
+    return result[0]['generated_text']
+
+#Function 2
+def text2story(text):
+    # This creates a text-generation pipeline
+    story_model = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
     
-    #Function 2
-    def text2story(text):
-        # This creates a text-generation pipeline
-        story_model = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
-        
-        # We ask the model to take your caption and write a short story
-        prompt = f"Write a short, creative story based on this scene: {text}. The story begins: "
-        story = story_model(prompt, max_length=150, do_sample=True, temperature=0.7)
-        return story[0]['generated_text']
+    # We ask the model to take your caption and write a short story
+    prompt = f"Write a short, creative story based on this scene: {text}. The story begins: "
+    story = story_model(prompt, max_length=150, do_sample=True, temperature=0.7)
+    return story[0]['generated_text']
     
 # Main part   
     # Step 1: Image uploader
