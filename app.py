@@ -17,7 +17,8 @@ st.write("☀️ Sweetie, it is wonderful story time~ Let's enjoy the story! ✨
 def get_models():
     captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
     story_gen = pipeline("text-generation", model="pranavpsv/genre-story-generator-v2")
-    return captioner, story_gen
+    audio_pipe = pipeline("text-to-speech", model="facebook/mms-tts-eng")
+    return captioner, story_gen，audio_pipe
 
 captioner, story_gen = get_models()
 
@@ -31,10 +32,11 @@ def text2story(text):
     story = story_gen(prompt, max_length=150, do_sample=True, temperature=0.7)
     return story[0]['generated_text']
 
-def story2audio(audio):
-    audio_pipe = pipeline("text-to-audio", model="Matthijs/mms-tts-eng")
-    audio_data = audio_pipe(story)
-    return story[0]['generated_audio']
+def story2audio(story_text):
+    # This turns the story text into audio waves
+    audio_output = audio_pipe(story_text)
+    return audio_output
+
     
     
 
@@ -62,10 +64,21 @@ else:
     st.info("Please upload an image to start the story.")
 
     # Now show the button to generate the story in audio
-    if st.button("Play Audio"):
-        audio_array = audio_data["audio"]
-        sample_rate = audio_data["sampling_rate"]
-        st.audio(audio_array, sample_rate=sample_rate)
-
-
+   if 'saved_story' in st.session_state:
+        st.write("---")
+        st.subheader("📖 The Story")
+        st.write(st.session_state['saved_story'])
+   # 3. If a story exists, show it and show the Audio Button
+        if st.button("🎧 Play Audio"):
+            with st.spinner("Converting story to speech..."):
+                audio_data = story2audio(st.session_state['saved_story'])
+                
+                # Extract the audio array and sample rate from the model output
+                audio_array = audio_data["audio"]
+                sample_rate = audio_data["sampling_rate"]
+                
+                # Display the audio player
+                st.audio(audio_array, sample_rate=sample_rate)
+else:
+    st.info("Please upload an image to start the story.")
 
