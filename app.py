@@ -48,19 +48,23 @@ if uploaded_image is not None:
     image = Image.open(uploaded_image)
     st.image(image, caption="Uploaded Image", use_container_width=True)
     
-    # 1. Get Image Caption
-    with st.spinner("Turning your image into a description..."):
-        scenario = img2text(uploaded_image)
-        st.write(f"**Description:** {scenario}")
+    # STEP 1: Generate Caption only when this button is clicked
+    if st.button("🔍 Step 1: Describe Image"):
+        with st.spinner("Analyzing..."):
+            scenario = img2text(uploaded_image)
+            st.session_state['scenario'] = scenario # Save it!
 
-    # 2. Story Generation Button
-    if st.button("✨ Generate My Story ✨"):
-        with st.spinner("Writing a magical story..."):
-            generated_story = text2story(scenario)
-            # Save the story into session state so it doesn't disappear
-            st.session_state['saved_story'] = generated_story
+    # Check if we have a scenario saved
+    if 'scenario' in st.session_state:
+        st.write(f"**Description:** {st.session_state['scenario']}")
 
-    # 3. If a story exists, show it and show the Audio Button
+        # STEP 2: Generate Story only when THIS button is clicked
+        if st.button("✨ Step 2: Generate My Story ✨"):
+            with st.spinner("Writing a magical story..."):
+                generated_story = text2story(st.session_state['scenario'])
+                st.session_state['saved_story'] = generated_story # Save it!
+
+    # STEP 3: Show Story and Audio button if story exists
     if 'saved_story' in st.session_state:
         st.write("---")
         st.subheader("📖 The Story")
@@ -69,12 +73,7 @@ if uploaded_image is not None:
         if st.button("🎧 Play Audio"):
             with st.spinner("Converting story to speech..."):
                 audio_data = story2audio(st.session_state['saved_story'])
-                
-                # Extract the audio array and sample rate from the model output
-                audio_array = audio_data["audio"]
-                sample_rate = audio_data["sampling_rate"]
-                
-                # Display the audio player
-                st.audio(audio_array, sample_rate=sample_rate)
+                st.audio(audio_data["audio"], sample_rate=audio_data["sampling_rate"])
+
 else:
     st.info("Please upload an image to start the story.")
